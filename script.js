@@ -11,8 +11,28 @@ list.addEventListener("change", (e) => {
   if (!e.target.matches("[data-list-item-checkbox]")) return;
 
   // Get the todo that is clicked on
+  const parent = e.target.closest(".list-item");
+  const todoId = parent.dataset.todoId;
+  const todo = todos.find((t) => t.id === todoId);
+  todo.complete = e.target.checked;
+
   // Toggle the complete property to be equal to the checkbox value
   // Save our updated todo
+  saveTodos();
+});
+
+// Delete todos
+list.addEventListener("click", (e) => {
+  if (!e.target.matches("[data-button-delete]")) return;
+
+  const parent = e.target.closest(".list-item");
+  const todoId = parent.dataset.todoId;
+  // Remove the todo from the screen
+  parent.remove();
+  // Remove the todo from the list
+  todos = todos.filter((todo) => todo.id !== todoId);
+  // Save the new todos
+  saveTodos();
 });
 
 // Add todos
@@ -41,6 +61,8 @@ function renderTodo(todo) {
   listItem.dataset.todoId = todo.id;
   const textElement = templateClone.querySelector("[data-list-item-text]");
   textElement.innerText = todo.name;
+  const checkbox = templateClone.querySelector("[data-list-item-checkbox]");
+  checkbox.checked = todo.complete;
   list.appendChild(templateClone);
 }
 
