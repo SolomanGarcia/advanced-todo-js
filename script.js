@@ -5,6 +5,8 @@ const template = document.querySelector("#list-item-template");
 const todos = [];
 const LOCAL_STORAGE_PREFIX = "ADVANCED_TODO_LIST";
 const TODOS_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-todos`;
+const todos = loadTodos();
+todos.forEach(renderTodo);
 
 // Add todos
 // User will type in todo and click add todo button.
@@ -28,8 +30,13 @@ function renderTodo(todoName) {
   list.appendChild(templateClone);
 }
 
+// Load todos
+function loadTodos() {
+  const todosString = localStorage.getItem(TODOS_STORAGE_KEY);
+  return JSON.parse(todosString) || [];
+}
+
 // Save todos
 function saveTodos() {
-  localStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(todos))
-
-// Load todos
+  localStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify);
+}
